@@ -146,7 +146,7 @@ testplugin_pi::testplugin_pi(void *ppimgr)
     appendOSDirSlash( l_pDir );
     if ( !wxDir::Exists(*l_pDir))
         wxMkdir( *l_pDir );
-    l_pDir->Append(_T("testplugin_pi"));
+    l_pDir->Append(_T("metweather_pi"));
     appendOSDirSlash( l_pDir );
     if ( !wxDir::Exists(*l_pDir))
         wxMkdir( *l_pDir );
@@ -247,11 +247,11 @@ int testplugin_pi::Init(void)
 
 
 #ifdef PLUGIN_USE_SVG
-    m_testplugin_button_id  = InsertPlugInToolSVG(_("Test Plugin"), m_ptpicons->m_s_testplugin_grey_pi, m_ptpicons->m_s_testplugin_pi, m_ptpicons->m_s_testplugin_toggled_pi, wxITEM_CHECK,
-                                                  _("Test Plugin"), wxS(""), NULL, testplugin_POSITION, 0, this);
+    m_testplugin_button_id  = InsertPlugInToolSVG(_("MET Weather"), m_ptpicons->m_s_testplugin_grey_pi, m_ptpicons->m_s_testplugin_pi, m_ptpicons->m_s_testplugin_toggled_pi, wxITEM_CHECK,
+                                                  _("MET Weather"), wxS(""), NULL, testplugin_POSITION, 0, this);
 #else
-    m_testplugin_button_id  = InsertPlugInTool(_("Test Plugin"), &m_ptpicons->m_bm_testplugin_grey_pi, &m_ptpicons->m_bm_testplugin_pi, wxITEM_CHECK,
-                                             _("Test Plugin"), wxS(""), NULL, testplugin_POSITION, 0, this);
+    m_testplugin_button_id  = InsertPlugInTool(_("MET Weather"), &m_ptpicons->m_bm_testplugin_grey_pi, &m_ptpicons->m_bm_testplugin_pi, wxITEM_CHECK,
+                                             _("MET Weather"), wxS(""), NULL, testplugin_POSITION, 0, this);
 #endif
 
     //    In order to avoid an ASSERT on msw debug builds,
@@ -490,7 +490,7 @@ void testplugin_pi::SaveConfig()
     wxFileConfig *pConf = m_pTPConfig;
 
     if(pConf) {
-        pConf->SetPath( wxS( "/Settings/testplugin_pi" ) );
+        pConf->SetPath( wxS( "/Settings/metweather_pi" ) );
         if(m_bRecreateConfig) {
             pConf->DeleteGroup( "/Settings/testplugin_pi" );
         } else {
@@ -520,7 +520,7 @@ void testplugin_pi::LoadConfig()
     if(pConf)
     {
         wxString val;
-        pConf->SetPath( wxS( "/Settings/testplugin_pi" ) );
+        pConf->SetPath( wxS( "/Settings/metweather_pi" ) );
         wxString  l_wxsColour;
         pConf->Read( wxS( "SaveJSONOnStartup"), &g_bSaveJSONOnStartup, false );
         if(g_bSaveJSONOnStartup) m_tpControlDialogImpl->SetSaveJSONOnStartup(g_bSaveJSONOnStartup);

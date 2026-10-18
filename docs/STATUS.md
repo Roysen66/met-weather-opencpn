@@ -98,3 +98,15 @@ preserved unless the user explicitly changes it.
 - Commit and push at major milestones, including during a session.
 - Preserve working code before making substantial changes.
 - Prefer one verified development step at a time.
+
+## MET Weather 0.1.0 – egen pluginidentitet (18.10.2026)
+
+- Endret visningsnavn til MET Weather og pakkenavn til metweather.
+- Satt versjon til 0.1.0.
+- Skilt datakatalog og konfigurasjon fra Testplugin.
+- Oppdatert ikonsti og verktøylinjetekster.
+- Opprettet tre SVG-ikoner: normal, deaktivert og aktiv.
+- Oppdatert Cloudsmith-referansen til metweather.
+- Endringene er foreløpig kun gjort i kildekoden.
+- Bygging, pakking og kjøring i OpenCPN er IKKE verifisert.
+- Eksisterende Testplugin skal beholdes som fungerende referanse.

@@ -75,7 +75,7 @@ void tpicons::initialize_images(void)
     //const char *sPluginName = "testplugin_pi";
     //fn.SetPath(GetPluginDataDir(sPluginName));
     //const char *sPluginName = "testplugin_pi";
-    fn.SetPath(wxT("/app/extensions/share/opencpn/plugins/testplugin_pi"));
+    fn.SetPath(wxT("/app/extensions/share/opencpn/plugins/metweather_pi"));
     //    fn.AppendDir( wxT("plugins") );
 //    fn.AppendDir(wxT("testplugin_pi"));
     fn.AppendDir(wxT("data"));
@@ -87,13 +87,13 @@ void tpicons::initialize_images(void)
     m_failedBitmapLoad = false;
 
 #ifdef PLUGIN_USE_SVG
-    fn.SetFullName(wxT("testplugin.svg"));
+    fn.SetFullName(wxT("metweather.svg"));
     m_s_testplugin_pi = fn.GetFullPath();
     m_bm_testplugin_pi = LoadSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("testplugingrey.svg"));
+    fn.SetFullName(wxT("metweather-grey.svg"));
     m_s_testplugin_grey_pi = fn.GetFullPath();
     m_bm_testplugin_grey_pi = LoadSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("testplugin-toggled.svg"));
+    fn.SetFullName(wxT("metweather-active.svg"));
     m_s_testplugin_toggled_pi = fn.GetFullPath();
     m_bm_testplugin_toggled_pi = LoadSVG( fn.GetFullPath() );
 #else

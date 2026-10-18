@@ -101,3 +101,17 @@ dialog only. Weather mode is NOT implemented yet.
 3. Check git status.
 4. Continue from the immediate next action.
 5. Update these documents when the milestone changes.
+
+## Neste milepæl – MET Weather 0.1.0 (18.10.2026)
+
+1. Commit og push identitetsendringene og SVG-ikonene til GitHub.
+2. Konfigurer CMake på nytt for pakken metweather_pi.
+3. Bygg Flatpak-pluginen fra oppdatert GitHub main.
+4. Kontroller at pakken inneholder libmetweather_pi.so, metadata og alle tre SVG-ikonene.
+5. Importer pakken gjennom OpenCPNs eget pluginvindu.
+6. Verifiser navn, versjon, ikon og at MET Weather kan aktiveres.
+7. Bekreft at eksisterende Testplugin fortsatt fungerer.
+8. Dokumenter testresultatene og commit/push.
+
+Viktig: Flatpak-bygget henter kildekoden fra GitHub main.
+Ingen bygging eller kjøring av MET Weather 0.1.0 er ennå verifisert.

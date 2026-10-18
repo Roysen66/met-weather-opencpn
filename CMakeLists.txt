@@ -61,21 +61,21 @@ endif (COMMAND cmake_policy)
 set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
 
 # define plugin name, owner and versions
-set(VERBOSE_NAME "Testplugin")
-set(COMMON_NAME "Testplugin")
-set(TITLE_NAME "testplugin")
-set(PACKAGE_CONTACT "Jon Gough")
-set(PACKAGE "testplugin")
+set(VERBOSE_NAME "MET Weather")
+set(COMMON_NAME "MET Weather")
+set(TITLE_NAME "metweather")
+set(PACKAGE_CONTACT "Roysen66")
+set(PACKAGE "metweather")
 set(SHORT_DESCRIPTION
-    "Plugin to test examples of the ODAPI and JSON interface for ODRAW"
+    "Weather forecasts and marine weather overlays for OpenCPN"
 )
 set(LONG_DESCRIPTION
-    "testplugin Plugin is used to test out the ODraw API and demonstrate how to use it successfully from another plugin"
+    "MET Weather provides weather forecasts and marine weather overlays for OpenCPN"
 )
 
-set(VERSION_MAJOR "1")
-set(VERSION_MINOR "0")
-set(VERSION_PATCH "363")
+set(VERSION_MAJOR "0")
+set(VERSION_MINOR "1")
+set(VERSION_PATCH "0")
 set(VERSION_TWEAK "0")
 set(VERSION_DATE "08/09/2026") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
@@ -102,7 +102,7 @@ set(ALPHA "alpha") # Standard Repos
 # Set if  Cloudsmith Base Repository name does not match your Git Repository
 # name. set(CLOUDSMITH_BASE_REPOSITORY "${GIT_REPOSITORY_NAME}")
 # set(CLOUDSMITH_BASE_REPOSITORY "opencpn-plugins")  #Ricks's customization
-set(CLOUDSMITH_BASE_REPOSITORY "testplugin") # without the pi
+set(CLOUDSMITH_BASE_REPOSITORY "metweather") # without the pi
 
 # Set the following to use OpenCPN cloudsmith repositories instead of own
 # repositories
