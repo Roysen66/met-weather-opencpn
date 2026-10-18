@@ -16,16 +16,17 @@ Værdata er ennå ikke tilkoblet.
 
 ## Neste arbeidsoppgaver
 
-1. Kontrollere og lagre dagens kildekodeendringer og dokumentasjon i Git.
-2. Commit og push til GitHub.
-3. Undersøke livssyklusen til MET Weather-dialogen og mulig årsak til importkrasjene.
-4. Bygge en ny Flatpak-installasjonspakke fra siste kildekode.
-5. Gjennomføre kontrollert import og aktivering i OpenCPN.
-6. Teste åpning, lukking med X, verktøylinjeknapp og deaktivering.
-7. Kontrollere OpenCPN-logg og eventuelle nye krasj.
-8. Fortsette opprydding i gjenværende Testplugin-kode.
-9. Undersøke MET Norges datakilder for Weather, Current og Waves.
-10. Planlegge og implementere første datatilkobling i små, testbare steg.
+1. Kontrollere og committe siste lokale kodeendringer og dokumentasjon.
+2. Push til GitHub.
+3. Avklare om OpenCPN 5.14.2 selv fjerner pluginens verktøylinjeknapp ved deaktivering, og kontrollere at `RemovePlugInTool()` ikke gir dobbel opprydding.
+4. Undersøke videre mulige årsaker til de to importkrasjene.
+5. Bygge en ny Flatpak-installasjonspakke fra siste kildekode.
+6. Gjennomføre kontrollert import og aktivering i OpenCPN.
+7. Teste åpning, lukking med X, verktøylinjeknapp og deaktivering.
+8. Kontrollere OpenCPN-logg og eventuelle nye krasj.
+9. Fortsette opprydding i gjenværende Testplugin-kode.
+10. Undersøke MET Norges datakilder for Weather, Current og Waves.
+11. Planlegge og implementere første datatilkobling i små, testbare steg.
 
 Ikke endre den separat installerte Testplugin.
 

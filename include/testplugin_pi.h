@@ -161,7 +161,6 @@ public:
 
     wxWindow            *m_parent_window;
     wxFileConfig        *m_pTPConfig;
-    wxTimer             *m_timer;
 
 
     //    The required PlugIn Methods
@@ -204,7 +203,6 @@ public:
     void SetCursorLatLon(double lat, double lon);
 
     // OD Methods
-    void ProcessTimerEvent(wxTimerEvent& ev);
     void PopupMenuHandler(wxCommandEvent& ev);
 
     void SetToolbarTool( void );
@@ -270,9 +268,6 @@ public:
 
 
 private:
-    void    OnTimer(wxTimerEvent& ev);
-
-
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
     void    FindSelectedObject( void );

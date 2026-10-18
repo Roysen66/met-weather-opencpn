@@ -51,9 +51,9 @@ fungerende i OpenCPN.
 
 ## Siste utviklingsarbeid – 18. oktober 2026
 
-Siste commit på GitHub før dagens lokale endringer:
+Siste commit på GitHub før den videre lokale oppryddingen:
 
-13f3868 – Disable legacy Testplugin message handling
+a574e68 – Remove legacy Testplugin dialog and config handling
 
 Følgende endringer er gjennomført lokalt:
 
@@ -73,9 +73,22 @@ Kontroll:
 - Import i OpenCPN: ikke testet etter disse endringene.
 - Funksjonstest i OpenCPN: ikke utført etter disse endringene.
 
-Endringene er ennå ikke committet eller pushet til GitHub.
+Endringene ovenfor er committet og pushet til GitHub i commit a574e68.
 
 Det gjenstår eldre Testplugin-kode som ikke er fjernet.
+
+### Videre opprydding – 18. oktober 2026
+
+- Fjernet tre ubrukte timerdeklarasjoner fra `include/testplugin_pi.h`.
+- Initialisert `m_testplugin_button_id` til `-1` i konstruktøren.
+- Lagt til `RemovePlugInTool()` i `DeInit()`, med kontroll av knappens ID.
+- Bekreftet at prosjektet er konfigurert for OpenCPN API 1.21.
+- Kontrollert endringene med `git diff --check`.
+- `flatpak-build` fullført uten feil etter kodeendringene.
+- Endringene er foreløpig ikke committet eller pushet.
+- Ingen ny Flatpak-pakke er laget eller importert etter endringene.
+- Årsaken til de to tidligere importkrasjene er fortsatt uavklart.
+- Det er ikke bekreftet om OpenCPN 5.14.2 selv fjerner verktøylinjeknappen ved deaktivering.
 
 ## Uavklart problem
 

@@ -135,7 +135,8 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 
 testplugin_pi::testplugin_pi(void *ppimgr)
 : opencpn_plugin_121(ppimgr),
-  m_metWeatherDialog(nullptr)
+  m_metWeatherDialog(nullptr),
+  m_testplugin_button_id(-1)
 {
     // Create the PlugIn icons
     g_ppimgr = ppimgr;
@@ -294,11 +295,17 @@ void testplugin_pi::LateInit(void)
 
 bool testplugin_pi::DeInit(void)
 {
-    if(m_metWeatherDialog)
+    if (m_metWeatherDialog)
     {
         m_metWeatherDialog->SetCloseCallback({});
         delete m_metWeatherDialog;
         m_metWeatherDialog = nullptr;
+    }
+
+    if (m_testplugin_button_id != -1)
+    {
+        RemovePlugInTool(m_testplugin_button_id);
+        m_testplugin_button_id = -1;
     }
 
     return true;
