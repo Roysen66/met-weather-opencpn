@@ -4,21 +4,40 @@ Oppdatert: 2026-10-18
 
 ## Nåværende milepæl
 
-MET Weather 0.1.0.0 er kompilert, pakket, importert,
-aktivert og testet i OpenCPN 5.14.2 Flatpak.
+MET Weather 0.1.0.0 har et eget dialogvindu med
+Weather, Current og Waves.
 
-Neste fase er å erstatte testgrensesnittet med
-MET Weathers eget grensesnitt.
+Åpning og lukking fra verktøylinjen fungerer.
+Lukking med X fungerer og tilbakestiller verktøyknappen.
+
+Funksjonene er bekreftet i OpenCPN 5.14.2 Flatpak.
+
+Værdata er ennå ikke tilkoblet.
 
 ## Neste arbeidsoppgaver
 
 1. Lagre oppdaterte STATUS.md og NEXT.md i GitHub.
-2. Undersøke eksisterende testdialog og tilhørende kode.
-3. Planlegge et minimalt MET Weather-vindu.
-4. Erstatte TESTPLUGIN-overskrift og ODAPI-testinformasjon
-   med et enkelt MET Weather-grensesnitt.
-5. Bygge, pakke, importere og teste endringen i OpenCPN.
-6. Dokumentere resultatet og pushe neste milepæl.
+2. Undersøke gjenværende Testplugin-kode inne i MET Weather.
+3. Planlegge trygg opprydding uten å endre separat Testplugin.
+4. Undersøke MET Norges datakilder for Weather, Current og Waves.
+5. Avklare dataformat, geografisk dekning og oppdateringsintervall.
+6. Planlegge automatisk områdevalg basert på fartøyets posisjon.
+7. Implementere første datatilkobling i små, testbare steg.
+8. Bygge, pakke, installere og funksjonsteste hver milepæl.
+
+## Uavklart feil
+
+OpenCPN krasjet under import av MET Weather 18. oktober 2026.
+
+Kjernedump bekreftet SIGSEGV, men årsaken er ikke fastslått.
+
+Den installerte pluginfilen ble kontrollert mot byggefilen
+med SHA-256 og var identisk.
+
+Etter omstart fungerte MET Weather.
+
+Undersøk importprosessen videre før feilen regnes som løst.
+Unngå å anta at krasjet skyldes den siste kodeendringen.
 
 ## Videre utviklingsmål
 
@@ -48,12 +67,16 @@ MET Weathers eget grensesnitt.
 
 - Bruk OpenCPNs API fremfor hardkodede installasjonsstier.
 - Behold kompatibilitet med OpenCPNs plugin-system.
-- Ikke anta at en vellykket kompilering betyr fungerende plugin.
-- Test alltid i faktisk OpenCPN etter import.
-- Behold eksisterende Testplugin uendret.
+- Ikke anta at vellykket kompilering betyr fungerende plugin.
+- Test funksjoner i faktisk OpenCPN.
+- Behold eksisterende separate Testplugin uendret.
 - Gjør små, etterprøvbare endringer.
+- Dokumenter bekreftede resultater og uavklarte feil.
+- Ett kontrollert steg om gangen.
 
 ## Viktig
 
-Værfunksjoner er foreløpig planer, ikke implementerte funksjoner.
-Ikke start større ombygging før eksisterende dialogkode er undersøkt.
+MET Weather har et fungerende grunnleggende brukergrensesnitt,
+men er ennå ikke en fungerende værutvidelse.
+
+Weather, Current og Waves er foreløpig plassholdere.

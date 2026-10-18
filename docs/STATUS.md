@@ -9,59 +9,77 @@ Oppdatert: 2026-10-18
 - Testet OpenCPN-versjon: 5.14.2
 - Pluginversjon: 0.1.0.0
 - OpenCPN plugin-API: 1.21
+- Flatpak SDK: 25.08
 - Grunnlag: Testplugin fra OpenCPN
 - Eksisterende Testplugin beholdes som separat utvidelse.
 
 ## Bekreftet fungerende
 
 - Selvstendig MET Weather-identitet og pluginbibliotek.
-- Flatpak-kompilering med SDK 25.08.
-- Generering av installasjonspakke med metadata.xml.
-- Import via OpenCPNs grafiske utvidelsesbehandling.
+- Flatpak-kompilering og generering av installasjonspakke.
 - MET Weather og Testplugin installert samtidig.
-- MET Weather aktivert uten ikonfeil.
-- MET Weather-ikon synlig i utvidelseslisten og verktøylinjen.
-- Klikk på MET Weather åpner den eksisterende testdialogen.
+- MET Weather-ikoner lastes og vises korrekt.
+- Eget MET Weather-dialogvindu.
+- Tre knapper: Weather, Current og Waves.
+- Foreløpig melding: Weather data not connected yet.
+- Dialogen åpnes og lukkes fra verktøylinjen.
+- Lukking med X tilbakestiller verktøyknappens tilstand.
+- Begge lukkemetodene fungerer likt.
+- Dialogen åpnes igjen ved første klikk etter lukking.
 
-## Løst problem: SVG-ikoner
+## SVG-ikoner
 
-Tidligere brukte tpicons.cpp hardkodede Flatpak-stier.
-Dette fungerte ikke med den brukerimporterte utvidelsen.
-
-Løsningen er OpenCPNs offisielle API:
+Ikonene lokaliseres gjennom OpenCPNs API:
 
     GetPluginDataDir("metweather_pi")
 
-Funksjonen er dokumentert i opencpn-libs/api-21/ocpn_plugin.h.
-Koden legger deretter til undermappen data.
-
-Alle tre SVG-ikonene lastes nå uten den tidligere ikonfeilen.
-Dette er bekreftet ved aktivering i OpenCPN.
+Dette erstatter tidligere hardkodede Flatpak-stier.
 
 ## Siste bekreftede kildekodeendring
 
-Commit: 030285d
-Use OpenCPN API to locate MET Weather icons
+Commit: 1abf702
+Synchronize MET Weather dialog close with toolbar state
 
 Endringen er pushet til GitHub.
-Flatpak-bygget og installasjonspakken ble deretter generert
-og testet med vellykket resultat.
+
+Flatpak-bygget og installasjonspakken ble generert.
+Det installerte pluginbiblioteket har identisk SHA-256
+med biblioteket i byggemappen.
+
+Dialogens lukkefunksjon er testet og bekreftet
+fungerende i OpenCPN.
+
+## Uavklart problem
+
+OpenCPN krasjet under import av den nyeste pluginpakken
+18. oktober 2026.
+
+En kjernedump bekreftet SIGSEGV. Årsaken er ikke fastslått.
+
+Etter omstart lastet OpenCPN MET Weather uten rapportert
+kompatibilitetsfeil, og funksjonstesten var vellykket.
+
+Loggen viste også tidligere meldingen:
+"trying to Uninstall non-existing plugin MET Weather"
+
+Sammenhengen med krasjet er ikke bekreftet.
 
 ## Ikke implementert ennå
 
-- MET-værdata og nedlasting.
+- Tilkobling til MET-værdata.
 - Automatisk områdevalg fra fartøyets posisjon.
-- Valg mellom Weather, Current og Waves.
+- Faktisk nedlasting av Weather, Current og Waves.
 - Visning av værdata på kartet.
 - Forbedret visualisering og fargeforklaring.
-- Tilpasning til nettbrett.
-- Eget MET Weather-dialogvindu.
+- Tilpasning og testing på nettbrett.
+- Opprydding i gjenværende eldre Testplugin-kode.
 
 ## Viktig avgrensning
 
-Pluginen fungerer teknisk i OpenCPN, men er ennå ikke
-en fungerende værutvidelse. Dialogen viser fortsatt
-TESTPLUGIN og ODAPI-testinformasjon.
+MET Weather har nå et eget fungerende brukergrensesnitt,
+men er ennå ikke en fungerende værutvidelse.
+
+Knappene er foreløpig plassholdere uten værdatatilkobling.
 
 ## Arbeidsmetode
 
