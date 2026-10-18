@@ -35,74 +35,120 @@ Ikonene lokaliseres gjennom OpenCPNs API:
 
 Dette erstatter tidligere hardkodede Flatpak-stier.
 
-## Siste bekreftede kildekodeendring
+## Siste bekreftede kildekodeendringer
 
-Commit: 1abf702
-Synchronize MET Weather dialog close with toolbar state
+Følgende commits er pushet til GitHub:
 
-Endringen er pushet til GitHub.
+- `a574e68` – Remove legacy Testplugin dialog and config handling
+- `7f3401d` – Clean up plugin lifecycle and update development status
+- `6e1f463` – Add lifecycle debug logging for MET Weather
 
-Flatpak-bygget og installasjonspakken ble generert.
-Det installerte pluginbiblioteket har identisk SHA-256
-med biblioteket i byggemappen.
+Siste commit inneholder seks midlertidige debugmeldinger:
 
-Dialogens lukkefunksjon er testet og bekreftet
-fungerende i OpenCPN.
+- Constructor
+- Destructor
+- Init START
+- Init END
+- DeInit START
+- DeInit END
+
+Det eksplisitte kallet til `RemovePlugInTool()` er fjernet
+fra `DeInit()`.
+
+Flatpak-bygging og pakking er fullført uten feil.
+Alle seks debugmeldingene er bekreftet i pluginbiblioteket.
 
 ## Siste utviklingsarbeid – 18. oktober 2026
 
-Siste commit på GitHub før den videre lokale oppryddingen:
+Oppryddingen i pluginens livssyklus er gjennomført
+og committet til GitHub.
 
-a574e68 – Remove legacy Testplugin dialog and config handling
+Gjennomførte endringer:
 
-Følgende endringer er gjennomført lokalt:
-
-- Fjernet opprettelse og opprydding av den gamle Testplugin-dialogen.
-- Fjernet SaveConfig() og LoadConfig() med tilhørende deklarasjoner.
+- Fjernet opprettelse av den gamle Testplugin-dialogen.
+- Fjernet SaveConfig() og LoadConfig().
 - Fjernet opprettelse av det gamle tpJSON-objektet.
-- Begrenset pluginens forespurte funksjoner til verktøylinje og tilhørende callback.
+- Begrenset forespurte pluginfunksjoner til verktøylinjen.
 - Initialisert MET Weather-dialogpekeren i konstruktøren.
-- Endret oppryddingen av MET Weather-dialogen til eksplisitt sletting etter at lukkecallbacken er fjernet.
+- Fjernet lukkecallback før sletting av dialogen.
 - Lagt til opprydding av ikonobjektet i destruktøren.
 
 Kontroll:
 
-- git diff --check: godkjent.
 - Flatpak-kompilering: vellykket.
-- Ny installasjonspakke: ikke generert etter disse endringene.
-- Import i OpenCPN: ikke testet etter disse endringene.
-- Funksjonstest i OpenCPN: ikke utført etter disse endringene.
+- Installasjonspakke: generert.
+- Import i OpenCPN: vellykket.
+- Normal avslutning: bekreftet.
+- Ny import over eksisterende plugin: vellykket.
 
-Endringene ovenfor er committet og pushet til GitHub i commit a574e68.
-
-Det gjenstår eldre Testplugin-kode som ikke er fjernet.
+Det gjenstår eldre Testplugin-kode som skal
+vurderes under videre opprydding.
 
 ### Videre opprydding – 18. oktober 2026
 
-- Fjernet tre ubrukte timerdeklarasjoner fra `include/testplugin_pi.h`.
-- Initialisert `m_testplugin_button_id` til `-1` i konstruktøren.
-- Lagt til `RemovePlugInTool()` i `DeInit()`, med kontroll av knappens ID.
-- Bekreftet at prosjektet er konfigurert for OpenCPN API 1.21.
+- Fjernet tre ubrukte timerdeklarasjoner.
+- Initialisert `m_testplugin_button_id` til `-1`.
+- Fjernet eksplisitt `RemovePlugInTool()` fra `DeInit()`.
+- Bekreftet OpenCPN plugin-API 1.21.
+- Lagt til seks midlertidige livssykluslogger.
 - Kontrollert endringene med `git diff --check`.
-- `flatpak-build` fullført uten feil etter kodeendringene.
-- Endringene er foreløpig ikke committet eller pushet.
-- Ingen ny Flatpak-pakke er laget eller importert etter endringene.
-- Årsaken til de to tidligere importkrasjene er fortsatt uavklart.
-- Det er ikke bekreftet om OpenCPN 5.14.2 selv fjerner verktøylinjeknappen ved deaktivering.
+- Committet og pushet endringene til GitHub.
 
-## Uavklart problem
+Siste commit: `6e1f463`
 
-OpenCPN krasjet to ganger under import av pluginpakker 18. oktober 2026.
+### Bekreftede tester
 
-En kjernedump bekreftet SIGSEGV. Årsaken er ikke fastslått.
+- Flatpak-bygging fullført uten feil.
+- Installasjonspakke generert.
+- Alle seks debugmeldinger finnes i pluginbiblioteket.
+- Første import i OpenCPN gjennomført uten krasj.
+- OpenCPN avsluttet normalt.
+- Ny import over eksisterende plugin gjennomført uten krasj.
+- Komplett avslutning og ny initialisering bekreftet
+  i OpenCPN-loggen klokken 21:10:50.
 
-Etter omstart lastet OpenCPN MET Weather uten rapportert
-kompatibilitetsfeil, og funksjonstesten var vellykket.
+Den tidligere krasjårsaken er fortsatt ikke fastslått.
 
-Loggen viste også tidligere meldingen:
+## Tidligere krasj – status
+
+OpenCPN krasjet flere ganger under import av
+MET Weather-pluginpakker 18. oktober 2026.
+
+En kjernedump bekreftet SIGSEGV.
+
+Undersøkelsen av krasjstakken viste blant annet:
+
+- OpenCPN `ConnectionsDlg::OnResize()`
+- wxWidgets `wxWindowBase::FindWindowByName()`
+
+Den underliggende årsaken er ikke fastslått.
+
+Loggmeldingen
 "trying to Uninstall non-existing plugin MET Weather"
+har også forekommet ved vellykket import.
+Det er ikke påvist at meldingen forårsaket krasjet.
 
-Sammenhengen med krasjet er ikke bekreftet.
+### Tester med siste versjon
+
+Med commit `6e1f463` er følgende bekreftet:
+
+- Import av MET Weather uten krasj.
+- Normal avslutning av OpenCPN.
+- Komplett livssyklus i debugloggen.
+- Ny import over eksisterende plugin uten krasj.
+- Korrekt avslutning av gammel plugininstans.
+- Korrekt initialisering av ny plugininstans.
+
+Ved ny import klokken 21:10:50 ble den gamle
+plugininstansen avsluttet og destruert før den
+nye instansen ble opprettet og initialisert.
+
+**Status: Krasjet er ikke gjenskapt med siste
+versjon. Den opprinnelige årsaken er fortsatt
+uavklart.**
+
+De midlertidige debugmeldingene beholdes
+foreløpig for videre diagnostikk.
 
 ## Ikke implementert ennå
 

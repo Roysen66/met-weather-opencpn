@@ -16,37 +16,65 @@ Værdata er ennå ikke tilkoblet.
 
 ## Neste arbeidsoppgaver
 
-1. Kontrollere og committe siste lokale kodeendringer og dokumentasjon.
-2. Push til GitHub.
-3. Avklare om OpenCPN 5.14.2 selv fjerner pluginens verktøylinjeknapp ved deaktivering, og kontrollere at `RemovePlugInTool()` ikke gir dobbel opprydding.
-4. Undersøke videre mulige årsaker til de to importkrasjene.
-5. Bygge en ny Flatpak-installasjonspakke fra siste kildekode.
-6. Gjennomføre kontrollert import og aktivering i OpenCPN.
-7. Teste åpning, lukking med X, verktøylinjeknapp og deaktivering.
-8. Kontrollere OpenCPN-logg og eventuelle nye krasj.
-9. Fortsette opprydding i gjenværende Testplugin-kode.
-10. Undersøke MET Norges datakilder for Weather, Current og Waves.
-11. Planlegge og implementere første datatilkobling i små, testbare steg.
+1. Fullføre oppdateringen av STATUS.md og NEXT.md.
+2. Kontrollere dokumentendringene med `git diff --check`
+   og `git diff`.
+3. Committe og pushe dokumentasjonen til GitHub.
+4. Kontrollere at dialogen fortsatt åpnes og lukkes
+   korrekt etter siste livssyklusendring.
+5. Beholde midlertidige debugmeldinger inntil
+   pluginens stabilitet er tilstrekkelig bekreftet.
+6. Gjennomgå gjenværende eldre Testplugin-kode
+   og vurdere hva som faktisk kan fjernes.
+7. Undersøke MET Norges datakilder for
+   Weather, Current og Waves.
+8. Avklare dataformater, geografisk dekning
+   og oppdateringsintervaller.
+9. Planlegge første datatilkobling med automatisk
+   områdevalg basert på fartøyets posisjon.
+10. Implementere og teste datatilkoblingen
+    i små, kontrollerte steg.
 
 Ikke endre den separat installerte Testplugin.
 
-Skille mellom kompilering, pakking, import, aktivering og funksjonstest.
+Skille mellom kompilering, pakking, import,
+aktivering og funksjonstest.
 
-## Uavklart feil
+## Tidligere krasj – videre oppfølging
 
-OpenCPN krasjet to ganger under import av pluginpakker 18. oktober 2026.
+OpenCPN krasjet flere ganger under import av
+MET Weather-pluginpakker 18. oktober 2026.
 
-Kjernedump bekreftet SIGSEGV, men årsaken er ikke fastslått.
+Kjernedump bekreftet SIGSEGV.
 
-Den installerte pluginfilen ble kontrollert mot byggefilen
-med SHA-256 og var identisk.
+Krasjstakken viste blant annet:
+- OpenCPN `ConnectionsDlg::OnResize()`
+- wxWidgets `wxWindowBase::FindWindowByName()`
 
-Etter omstart fungerte MET Weather.
+Den underliggende årsaken er fortsatt ukjent.
 
-Undersøk importprosessen videre før feilen regnes som løst.
-Unngå å anta at krasjet skyldes den siste kodeendringen.
+### Siste bekreftede tester
 
-Dagens lokale opprydding er kompilert, men ennå ikke pakket, importert eller funksjonstestet i OpenCPN.
+Med commit `6e1f463` er følgende gjennomført:
+
+- Flatpak-bygging og pakking uten feil.
+- Alle seks debugmeldinger bekreftet i biblioteket.
+- Import i OpenCPN uten krasj.
+- Normal avslutning av OpenCPN.
+- Komplett livssyklus bekreftet i loggen.
+- Ny import over eksisterende plugin uten krasj.
+- Korrekt avslutning og ny initialisering bekreftet.
+
+### Videre håndtering
+
+- Behold de midlertidige debugmeldingene.
+- Følg med på eventuelle nye krasj.
+- Undersøk nye krasjlogger dersom problemet kommer tilbake.
+- Ikke anta at endringen i `DeInit()` var årsaken
+  til at krasjene opphørte.
+
+**Status: Ingen krasj i siste tester.
+Opprinnelig årsak er ikke fastslått.**
 
 ## Videre utviklingsmål
 
