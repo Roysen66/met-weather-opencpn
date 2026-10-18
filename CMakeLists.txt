@@ -180,11 +180,12 @@ add_definitions(-DUSE_S57)
 
 # ---- Section Below - Add your project SET(SRCS and SET(HDRS  etc..
 
-set(SRCS src/tpControlDialogDef.cpp src/tpControlDialogImpl.cpp src/tpicons.cpp
+set(SRCS src/metWeatherDialog.cpp src/tpControlDialogDef.cpp src/tpControlDialogImpl.cpp src/tpicons.cpp
          src/tpJSON.cpp src/testplugin_pi.cpp src/tpUtils.cpp
 )
 
 set(HDRS
+    include/metWeatherDialog.h
     include/testplugin_pi.h
     include/tpicons.h
     include/tpControlDialogDef.h

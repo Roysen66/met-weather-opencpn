@@ -1,3 +1,4 @@
+#include "metWeatherDialog.h"
 /******************************************************************************
  * updated: 4-5-2012
  * Project:  OpenCPN
@@ -190,6 +191,7 @@ int testplugin_pi::Init(void)
     m_bDoneODAPIVersionCall = false;
     m_btpDialog = false;
     m_tpControlDialogImpl = NULL;
+    m_metWeatherDialog = nullptr;
     m_cursor_lat = 0.0;
     m_cursor_lon = 0.0;
     m_click_lat = 0.0;
@@ -236,6 +238,9 @@ int testplugin_pi::Init(void)
     // Get a pointer to the opencpn display canvas, to use as a parent for windows created
     m_parent_window = GetOCPNCanvasWindow();
     m_pTPConfig = GetOCPNConfigObject();
+
+    m_metWeatherDialog = new metWeatherDialog(m_parent_window);
+    m_metWeatherDialog->Hide();
 
     m_tpControlDialogImpl = new tpControlDialogImpl(m_parent_window);
     m_tpControlDialogImpl->Fit();
@@ -303,6 +308,12 @@ void testplugin_pi::LateInit(void)
 
 bool testplugin_pi::DeInit(void)
 {
+    if(m_metWeatherDialog)
+    {
+        m_metWeatherDialog->Destroy();
+        m_metWeatherDialog = nullptr;
+    }
+
     if(m_tpControlDialogImpl)
     {
         m_tpControlDialogImpl->Close();
@@ -462,16 +473,15 @@ void testplugin_pi::appendOSDirSlash(wxString* pString)
 
 void testplugin_pi::ToggleToolbarIcon( void )
 {
-    if(m_btpDialog) {
+    if(m_metWeatherDialog->IsShown()) {
+        m_metWeatherDialog->Hide();
         m_btpDialog = false;
-        SetToolbarItemState( m_testplugin_button_id, false );
-        m_tpControlDialogImpl->Hide();
+        SetToolbarItemState(m_testplugin_button_id, false);
     } else {
+        m_metWeatherDialog->Show();
+        m_metWeatherDialog->Raise();
         m_btpDialog = true;
-        SetToolbarItemState( m_testplugin_button_id, true  );
-        if(!m_bDoneODAPIVersionCall) GetODAPI();
-        m_tpControlDialogImpl->SetPanels();
-        m_tpControlDialogImpl->Show();
+        SetToolbarItemState(m_testplugin_button_id, true);
     }
 }
 

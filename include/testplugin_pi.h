@@ -150,6 +150,8 @@ std::cout << x  << std::endl ; } while (0)
 
 //#define PI 3.14159265
 
+class metWeatherDialog;
+
 class testplugin_pi : public opencpn_plugin_121
 {
 public:
@@ -234,6 +236,7 @@ public:
 
     tpicons *m_ptpicons;
     tpControlDialogImpl    *m_tpControlDialogImpl;
+    metWeatherDialog      *m_metWeatherDialog;
 
     bool    eventsEnabled;
     bool    m_bReadyForRequests;
