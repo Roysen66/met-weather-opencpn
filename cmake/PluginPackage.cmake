@@ -31,12 +31,18 @@ if (OCPN_FLATPAK_CONFIG)
   add_custom_target("flatpak-pkg")
   add_custom_command(
     TARGET flatpak-pkg
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+      ${CMAKE_CURRENT_BINARY_DIR}/package-metadata
+    COMMAND ${CMAKE_COMMAND} -E copy
+      ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGING_NAME_XML}.xml
+      ${CMAKE_CURRENT_BINARY_DIR}/package-metadata/metadata.xml
     COMMAND
       ${TAR} -czf
       ${PKG_NVR}-${ARCH}${PKG_TARGET_WX_VER}_${PKG_TARGET_NVR}.tar.gz --verbose
-      -C ${CMAKE_CURRENT_BINARY_DIR}/app
       --transform 's|^files|${PACKAGE}-flatpak-${PACKAGE_VERSION}|'
-      files/
+      --transform 's|^package-metadata|${PACKAGE}-flatpak-${PACKAGE_VERSION}|'
+      -C ${CMAKE_CURRENT_BINARY_DIR}/app files/
+      -C ${CMAKE_CURRENT_BINARY_DIR} package-metadata/metadata.xml
     COMMAND chmod -R a+wr ../build
   )
 
