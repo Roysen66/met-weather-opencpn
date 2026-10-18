@@ -142,6 +142,7 @@ testplugin_pi::testplugin_pi(void *ppimgr)
     g_ppimgr = ppimgr;
 //    g_tp_pi_manager = (PlugInManager *) ppimgr;
     g_testplugin_pi = this;
+    wxLogMessage("MET Weather DEBUG: Constructor");
 
     wxString *l_pDir = new wxString(*GetpPrivateApplicationDataLocation());
     appendOSDirSlash( l_pDir );
@@ -172,6 +173,7 @@ testplugin_pi::testplugin_pi(void *ppimgr)
 
 testplugin_pi::~testplugin_pi()
 {
+    wxLogMessage("MET Weather DEBUG: Destructor");
     delete m_ptpicons;
     m_ptpicons = nullptr;
 
@@ -191,6 +193,7 @@ testplugin_pi::~testplugin_pi()
 
 int testplugin_pi::Init(void)
 {
+    wxLogMessage("MET Weather DEBUG: Init START");
     g_tplocale = NULL;
     m_bReadyForRequests = false;
     m_bDoneODAPIVersionCall = false;
@@ -279,6 +282,7 @@ int testplugin_pi::Init(void)
 
     m_pOD_FindPointInAnyBoundary = NULL;
     m_pODFindClosestBoundaryLineCrossing = NULL;
+    wxLogMessage("MET Weather DEBUG: Init END");
 
     return (
         WANTS_TOOLBAR_CALLBACK |
@@ -295,6 +299,8 @@ void testplugin_pi::LateInit(void)
 
 bool testplugin_pi::DeInit(void)
 {
+    wxLogMessage("MET Weather DEBUG: DeInit START");
+
     if (m_metWeatherDialog)
     {
         m_metWeatherDialog->SetCloseCallback({});
@@ -302,12 +308,7 @@ bool testplugin_pi::DeInit(void)
         m_metWeatherDialog = nullptr;
     }
 
-    if (m_testplugin_button_id != -1)
-    {
-        RemovePlugInTool(m_testplugin_button_id);
-        m_testplugin_button_id = -1;
-    }
-
+    wxLogMessage("MET Weather DEBUG: DeInit END");
     return true;
 }
 
