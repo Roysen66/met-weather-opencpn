@@ -75,7 +75,7 @@ void tpicons::initialize_images(void)
     //const char *sPluginName = "testplugin_pi";
     //fn.SetPath(GetPluginDataDir(sPluginName));
     //const char *sPluginName = "testplugin_pi";
-    fn.SetPath(wxT("/app/extensions/metweather/share/opencpn/plugins/metweather_pi"));
+    fn.SetPath(GetPluginDataDir("metweather_pi"));
     //    fn.AppendDir( wxT("plugins") );
 //    fn.AppendDir(wxT("testplugin_pi"));
     fn.AppendDir(wxT("data"));
