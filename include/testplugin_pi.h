@@ -235,7 +235,6 @@ public:
     void    appendOSDirSlash(wxString* pString);
 
     tpicons *m_ptpicons;
-    tpControlDialogImpl    *m_tpControlDialogImpl;
     metWeatherDialog      *m_metWeatherDialog;
 
     bool    eventsEnabled;
@@ -273,8 +272,6 @@ public:
 private:
     void    OnTimer(wxTimerEvent& ev);
 
-    void    SaveConfig( void );
-    void    LoadConfig();
 
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);

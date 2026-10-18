@@ -134,7 +134,8 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //---------------------------------------------------------------------------------------------------------
 
 testplugin_pi::testplugin_pi(void *ppimgr)
-:opencpn_plugin_121(ppimgr)
+: opencpn_plugin_121(ppimgr),
+  m_metWeatherDialog(nullptr)
 {
     // Create the PlugIn icons
     g_ppimgr = ppimgr;
@@ -170,6 +171,9 @@ testplugin_pi::testplugin_pi(void *ppimgr)
 
 testplugin_pi::~testplugin_pi()
 {
+    delete m_ptpicons;
+    m_ptpicons = nullptr;
+
     delete g_SData_Locn;
     g_SData_Locn = NULL;
 
@@ -190,8 +194,6 @@ int testplugin_pi::Init(void)
     m_bReadyForRequests = false;
     m_bDoneODAPIVersionCall = false;
     m_btpDialog = false;
-    m_tpControlDialogImpl = NULL;
-    m_metWeatherDialog = nullptr;
     m_cursor_lat = 0.0;
     m_cursor_lon = 0.0;
     m_click_lat = 0.0;
@@ -246,13 +248,6 @@ int testplugin_pi::Init(void)
     });
     m_metWeatherDialog->Hide();
 
-    m_tpControlDialogImpl = new tpControlDialogImpl(m_parent_window);
-    m_tpControlDialogImpl->Fit();
-    m_tpControlDialogImpl->Layout();
-    m_tpControlDialogImpl->Hide();
-    LoadConfig();
-
-    g_ptpJSON = new tpJSON;
 
 
 #ifdef PLUGIN_USE_SVG
@@ -285,21 +280,8 @@ int testplugin_pi::Init(void)
     m_pODFindClosestBoundaryLineCrossing = NULL;
 
     return (
-        WANTS_CURSOR_LATLON       |
-        WANTS_TOOLBAR_CALLBACK    |
-        INSTALLS_TOOLBAR_TOOL     |
-//        WANTS_CONFIG              |
-        INSTALLS_TOOLBOX_PAGE     |
-        INSTALLS_CONTEXTMENU_ITEMS  |
-//        WANTS_NMEA_EVENTS         |
-//        WANTS_NMEA_SENTENCES        |
-        //    USES_AUI_MANAGER            |
-//        WANTS_PREFERENCES         |
-        //    WANTS_ONPAINT_VIEWPORT      |
-        WANTS_PLUGIN_MESSAGING    |
-        WANTS_LATE_INIT           |
-        WANTS_MOUSE_EVENTS        |
-        WANTS_KEYBOARD_EVENTS
+        WANTS_TOOLBAR_CALLBACK |
+        INSTALLS_TOOLBAR_TOOL
     );
 }
 
@@ -314,17 +296,10 @@ bool testplugin_pi::DeInit(void)
 {
     if(m_metWeatherDialog)
     {
-        m_metWeatherDialog->Destroy();
+        m_metWeatherDialog->SetCloseCallback({});
+        delete m_metWeatherDialog;
         m_metWeatherDialog = nullptr;
     }
-
-    if(m_tpControlDialogImpl)
-    {
-        m_tpControlDialogImpl->Close();
-        delete m_tpControlDialogImpl;
-        m_tpControlDialogImpl = NULL;
-    }
-    if(m_pTPConfig) SaveConfig();
 
     return true;
 }
@@ -435,32 +410,13 @@ bool testplugin_pi::KeyboardEventHook( wxKeyEvent &event )
     return bret;
 }
 
-bool testplugin_pi::MouseEventHook( wxMouseEvent &event )
+bool testplugin_pi::MouseEventHook(wxMouseEvent &event)
 {
-    bool bret = FALSE;
-
-    if(m_tpControlDialogImpl->IsVisible()) {
-        if(event.LeftDown()) {
-            m_click_lat = m_cursor_lat;
-            m_click_lon = m_cursor_lon;
-            m_tpControlDialogImpl->SetLatLon( m_cursor_lat, m_cursor_lon );
-            bret = TRUE;
-        }
-
-        if(event.LeftUp()) {
-            bret = TRUE;
-        }
-    }
-
-    return bret;
+    return false;
 }
 
 void testplugin_pi::SetCursorLatLon(double lat, double lon)
 {
-    if(m_tpControlDialogImpl->IsShown()) {
-        m_cursor_lat = lat;
-        m_cursor_lon = lon;
-    }
 }
 
 wxBitmap *testplugin_pi::GetPlugInBitmap()
@@ -490,70 +446,7 @@ void testplugin_pi::ToggleToolbarIcon( void )
     }
 }
 
-void testplugin_pi::SaveConfig()
-{
-    #ifndef __WXMSW__
-    wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
-    #if wxCHECK_VERSION(3,0,0)  && !defined(_WXMSW_)
-    //#if wxCHECK_VERSION(3,0,0)
-    wxSetlocale(LC_NUMERIC, "C");
-    #else
-    setlocale(LC_NUMERIC, "C");
-    #endif
-    #endif
 
-    wxFileConfig *pConf = m_pTPConfig;
-
-    if(pConf) {
-        pConf->SetPath( wxS( "/Settings/metweather_pi" ) );
-        if(m_bRecreateConfig) {
-            pConf->DeleteGroup( "/Settings/testplugin_pi" );
-        } else {
-            pConf->Write( wxS( "SaveJSONOnStartup" ), g_bSaveJSONOnStartup );
-            pConf->Write( wxS( "JSONSaveFile" ), m_fnOutputJSON.GetFullPath());
-            pConf->Write( wxS( "JSONInputFile" ), m_fnInputJSON.GetFullPath());
-            pConf->Write( wxS( "CloseSaveFileAferEachWrite" ), m_bCloseSaveFileAfterEachWrite);
-            pConf->Write( wxS( "AppendToSaveFile" ), m_bAppendToSaveFile);
-            pConf->Write( wxS( "SaveIncommingJSONMessages" ), m_bSaveIncommingJSONMessages);
-        }
-    }
-}
-
-void testplugin_pi::LoadConfig()
-{
-    #ifndef __WXMSW__
-    wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
-    #if wxCHECK_VERSION(3,0,0)
-    wxSetlocale(LC_NUMERIC, "C");
-    #else
-    setlocale(LC_NUMERIC, "C");
-    #endif
-    #endif
-
-    wxFileConfig *pConf = m_pTPConfig;
-
-    if(pConf)
-    {
-        wxString val;
-        pConf->SetPath( wxS( "/Settings/metweather_pi" ) );
-        wxString  l_wxsColour;
-        pConf->Read( wxS( "SaveJSONOnStartup"), &g_bSaveJSONOnStartup, false );
-        if(g_bSaveJSONOnStartup) m_tpControlDialogImpl->SetSaveJSONOnStartup(g_bSaveJSONOnStartup);
-        wxString l_filepath;
-        pConf->Read( wxS("JSONSaveFile"), &l_filepath, wxEmptyString);
-        m_fnOutputJSON.Assign(l_filepath);
-        if(m_fnOutputJSON != wxEmptyString) m_tpControlDialogImpl->SetJSONSaveFile(m_fnOutputJSON.GetFullPath());
-        pConf->Read( wxS( "JSONInputFile" ), &l_filepath, wxEmptyString);
-        m_fnInputJSON.Assign(l_filepath);
-        if(m_fnInputJSON != wxEmptyString) m_tpControlDialogImpl->SetJSONInputFile(m_fnInputJSON.GetFullPath());
-        pConf->Read( wxS( "CloseSaveFileAferEachWrite" ), &m_bCloseSaveFileAfterEachWrite, true);
-        m_tpControlDialogImpl->SetCloseFileAfterEachWrite(m_bCloseSaveFileAfterEachWrite);
-        pConf->Read( wxS( "AppendToSaveFile" ), &m_bAppendToSaveFile, true);
-        m_tpControlDialogImpl->SetAppendToSaveFile(m_bAppendToSaveFile);
-        pConf->Read( wxS( "SaveIncommingJSONMessages" ), &m_bSaveIncommingJSONMessages, false);
-        m_tpControlDialogImpl->SetIncommingJSONMessages(m_bSaveIncommingJSONMessages);
-    }
-}
 void testplugin_pi::GetODAPI()
 {
     wxJSONValue jMsg;
@@ -800,12 +693,7 @@ bool testplugin_pi::ImportJSONFile()
 
 void testplugin_pi::UpdateCloseAfterSave(bool bCloseAfterSave)
 {
-    if(m_bCloseSaveFileAfterEachWrite != bCloseAfterSave) {
-        m_bCloseSaveFileAfterEachWrite = bCloseAfterSave;
-        if(bCloseAfterSave) {
-            g_ptpJSON->CloseJSONOutputFile();
-        }
-    }
+    m_bCloseSaveFileAfterEachWrite = bCloseAfterSave;
 }
 
 void testplugin_pi::UpdateAppendToFile(bool bAppendToFile)

@@ -49,10 +49,37 @@ med biblioteket i byggemappen.
 Dialogens lukkefunksjon er testet og bekreftet
 fungerende i OpenCPN.
 
+## Siste utviklingsarbeid – 18. oktober 2026
+
+Siste commit på GitHub før dagens lokale endringer:
+
+13f3868 – Disable legacy Testplugin message handling
+
+Følgende endringer er gjennomført lokalt:
+
+- Fjernet opprettelse og opprydding av den gamle Testplugin-dialogen.
+- Fjernet SaveConfig() og LoadConfig() med tilhørende deklarasjoner.
+- Fjernet opprettelse av det gamle tpJSON-objektet.
+- Begrenset pluginens forespurte funksjoner til verktøylinje og tilhørende callback.
+- Initialisert MET Weather-dialogpekeren i konstruktøren.
+- Endret oppryddingen av MET Weather-dialogen til eksplisitt sletting etter at lukkecallbacken er fjernet.
+- Lagt til opprydding av ikonobjektet i destruktøren.
+
+Kontroll:
+
+- git diff --check: godkjent.
+- Flatpak-kompilering: vellykket.
+- Ny installasjonspakke: ikke generert etter disse endringene.
+- Import i OpenCPN: ikke testet etter disse endringene.
+- Funksjonstest i OpenCPN: ikke utført etter disse endringene.
+
+Endringene er ennå ikke committet eller pushet til GitHub.
+
+Det gjenstår eldre Testplugin-kode som ikke er fjernet.
+
 ## Uavklart problem
 
-OpenCPN krasjet under import av den nyeste pluginpakken
-18. oktober 2026.
+OpenCPN krasjet to ganger under import av pluginpakker 18. oktober 2026.
 
 En kjernedump bekreftet SIGSEGV. Årsaken er ikke fastslått.
 

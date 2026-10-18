@@ -16,18 +16,24 @@ Værdata er ennå ikke tilkoblet.
 
 ## Neste arbeidsoppgaver
 
-1. Lagre oppdaterte STATUS.md og NEXT.md i GitHub.
-2. Undersøke gjenværende Testplugin-kode inne i MET Weather.
-3. Planlegge trygg opprydding uten å endre separat Testplugin.
-4. Undersøke MET Norges datakilder for Weather, Current og Waves.
-5. Avklare dataformat, geografisk dekning og oppdateringsintervall.
-6. Planlegge automatisk områdevalg basert på fartøyets posisjon.
-7. Implementere første datatilkobling i små, testbare steg.
-8. Bygge, pakke, installere og funksjonsteste hver milepæl.
+1. Kontrollere og lagre dagens kildekodeendringer og dokumentasjon i Git.
+2. Commit og push til GitHub.
+3. Undersøke livssyklusen til MET Weather-dialogen og mulig årsak til importkrasjene.
+4. Bygge en ny Flatpak-installasjonspakke fra siste kildekode.
+5. Gjennomføre kontrollert import og aktivering i OpenCPN.
+6. Teste åpning, lukking med X, verktøylinjeknapp og deaktivering.
+7. Kontrollere OpenCPN-logg og eventuelle nye krasj.
+8. Fortsette opprydding i gjenværende Testplugin-kode.
+9. Undersøke MET Norges datakilder for Weather, Current og Waves.
+10. Planlegge og implementere første datatilkobling i små, testbare steg.
+
+Ikke endre den separat installerte Testplugin.
+
+Skille mellom kompilering, pakking, import, aktivering og funksjonstest.
 
 ## Uavklart feil
 
-OpenCPN krasjet under import av MET Weather 18. oktober 2026.
+OpenCPN krasjet to ganger under import av pluginpakker 18. oktober 2026.
 
 Kjernedump bekreftet SIGSEGV, men årsaken er ikke fastslått.
 
@@ -38,6 +44,8 @@ Etter omstart fungerte MET Weather.
 
 Undersøk importprosessen videre før feilen regnes som løst.
 Unngå å anta at krasjet skyldes den siste kodeendringen.
+
+Dagens lokale opprydding er kompilert, men ennå ikke pakket, importert eller funksjonstestet i OpenCPN.
 
 ## Videre utviklingsmål
 
