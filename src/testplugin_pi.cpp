@@ -404,7 +404,8 @@ void testplugin_pi::ShowPreferencesDialog( wxWindow* parent )
 
 void testplugin_pi::SetPluginMessage(wxString &message_id, wxString &message_body)
 {
-    g_ptpJSON->ProcessMessage(message_id, message_body);
+    // Legacy Testplugin/ODAPI message handling disabled.
+    // MET Weather does not currently consume plugin messages.
     return;
 }
 
