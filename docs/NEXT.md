@@ -1,117 +1,59 @@
-# MET Weather for OpenCPN — Next Steps
+# MET Weather – NEXT
 
-Last updated: 2026-10-18
+Oppdatert: 2026-10-18
 
-## Read this first
+## Nåværende milepæl
 
-This document is the starting point when resuming development.
+MET Weather 0.1.0.0 er kompilert, pakket, importert,
+aktivert og testet i OpenCPN 5.14.2 Flatpak.
 
-Read together with:
-- docs/STATUS.md — verified progress and project status
-- docs/opencpn-api.md — OpenCPN API investigation
+Neste fase er å erstatte testgrensesnittet med
+MET Weathers eget grensesnitt.
 
-Do not repeat completed investigations unless new evidence
-makes it necessary.
+## Neste arbeidsoppgaver
 
-## Current milestone: Verify the migrated Flatpak package
+1. Lagre oppdaterte STATUS.md og NEXT.md i GitHub.
+2. Undersøke eksisterende testdialog og tilhørende kode.
+3. Planlegge et minimalt MET Weather-vindu.
+4. Erstatte TESTPLUGIN-overskrift og ODAPI-testinformasjon
+   med et enkelt MET Weather-grensesnitt.
+5. Bygge, pakke, importere og teste endringen i OpenCPN.
+6. Dokumentere resultatet og pushe neste milepæl.
 
-The migrated source is committed and pushed to GitHub main.
-Migration commit: ac6163e.
+## Videre utviklingsmål
 
-The Flatpak build and package creation succeeded from the new
-repository. The packaging path bug in cmake/PluginPackage.cmake
-has been corrected and the archive structure verified.
+### Brukeropplevelse
 
-Package:
+- Automatisk geografisk område basert på aktuell posisjon.
+- Enkelt valg mellom Weather, Current og Waves.
+- Færrest mulig dialoger og manuelle valg.
+- Ingen krav om å holde et stort GRIB-vindu åpent.
+- God betjening på både PC og nettbrett.
 
-    build/testplugin_pi-1.0.363.0-x86_64_flatpak-25.08.tar.gz
+### Værdata
 
-The Flatpak builder currently fetches source from GitHub main.
-Changes to plugin source must be pushed before relying on a
-new flatpak-build result.
+- Undersøke MET Norges relevante datakilder og API-er.
+- Avklare dataformater, dekning og oppdateringsintervaller.
+- Implementere nedlasting og lokal håndtering av data.
+- Skille tydelig mellom vær, strøm og bølger.
 
-The original working source remains at:
+### Kartvisning
 
-    ~/Utvikling/testplugin_pi
+- Tydelig og lesbar presentasjon i OpenCPN.
+- Forklaring av farger, enheter og symboler.
+- Kontroll over gjennomsiktighet.
+- Unngå at værgrafikken skjuler viktig kartinformasjon.
 
-## IMMEDIATE NEXT ACTION
+## Tekniske prinsipper
 
-Commit and push the verified packaging fix and documentation
-to Roysen66/met-weather-opencpn, branch main.
+- Bruk OpenCPNs API fremfor hardkodede installasjonsstier.
+- Behold kompatibilitet med OpenCPNs plugin-system.
+- Ikke anta at en vellykket kompilering betyr fungerende plugin.
+- Test alltid i faktisk OpenCPN etter import.
+- Behold eksisterende Testplugin uendret.
+- Gjør små, etterprøvbare endringer.
 
-Then test the newly built package in OpenCPN 5.14.2 Flatpak.
+## Viktig
 
-Verify:
-- Plugin loads successfully.
-- Toolbar button appears.
-- Toolbar button opens and closes the control dialog.
-
-Do not mark the new package runtime-verified until these tests
-have actually succeeded.
-
-## Next development milestone: Weather mode
-
-Extend the existing toolbar button instead of creating a
-separate plugin interface.
-
-Desired behavior:
-
-Navigation mode:
-- Normal OpenCPN chart display.
-- User's existing chart settings preserved.
-
-Weather mode:
-- Save relevant chart display settings.
-- Apply a suitable weather-overlay display configuration.
-- Keep essential navigation information visible.
-- Prepare the chart for weather overlays.
-
-Returning to navigation mode:
-- Restore the saved settings.
-- Avoid changing unrelated user preferences.
-
-Important:
-The existing toolbar button currently toggles the testplugin
-dialog only. Weather mode is NOT implemented yet.
-
-## Later development
-
-- MET Norway data integration.
-- Automatic selection of the visible geographic area.
-- Weather, current and wave layer switching.
-- Clear legends explaining displayed colors and values.
-- Touch-friendly controls for tablets.
-- Offline data caching.
-- Linux, Windows and Android compatibility.
-
-## Development discipline
-
-- One terminal command or verification step at a time.
-- Examine actual output before deciding the next action.
-- Never assume a successful build or runtime test.
-- Document decisions and test results.
-- Commit and push at every important milestone.
-- Preserve working versions before major modifications.
-- Avoid destructive Git operations and unnecessary rewrites.
-
-## How to resume after an interruption
-
-1. Read docs/NEXT.md.
-2. Read docs/STATUS.md if more context is needed.
-3. Check git status.
-4. Continue from the immediate next action.
-5. Update these documents when the milestone changes.
-
-## Neste milepæl – MET Weather 0.1.0 (18.10.2026)
-
-1. Commit og push identitetsendringene og SVG-ikonene til GitHub.
-2. Konfigurer CMake på nytt for pakken metweather_pi.
-3. Bygg Flatpak-pluginen fra oppdatert GitHub main.
-4. Kontroller at pakken inneholder libmetweather_pi.so, metadata og alle tre SVG-ikonene.
-5. Importer pakken gjennom OpenCPNs eget pluginvindu.
-6. Verifiser navn, versjon, ikon og at MET Weather kan aktiveres.
-7. Bekreft at eksisterende Testplugin fortsatt fungerer.
-8. Dokumenter testresultatene og commit/push.
-
-Viktig: Flatpak-bygget henter kildekoden fra GitHub main.
-Ingen bygging eller kjøring av MET Weather 0.1.0 er ennå verifisert.
+Værfunksjoner er foreløpig planer, ikke implementerte funksjoner.
+Ikke start større ombygging før eksisterende dialogkode er undersøkt.

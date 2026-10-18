@@ -1,112 +1,73 @@
-# MET Weather for OpenCPN — Project Status
+# MET Weather – STATUS
 
-Last updated: 2026-10-18
+Oppdatert: 2026-10-18
 
-## Project
+## Prosjekt
 
-Repository: https://github.com/Roysen66/met-weather-opencpn
+- GitHub: https://github.com/Roysen66/met-weather-opencpn
+- Plattform under utvikling: Linux Mint / OpenCPN Flatpak
+- Testet OpenCPN-versjon: 5.14.2
+- Pluginversjon: 0.1.0.0
+- OpenCPN plugin-API: 1.21
+- Grunnlag: Testplugin fra OpenCPN
+- Eksisterende Testplugin beholdes som separat utvidelse.
 
-Goal: Develop a touch-friendly weather plugin for OpenCPN using
-MET Norway weather data, with support for Linux, Windows and Android.
+## Bekreftet fungerende
 
-The plugin should provide a single toolbar button for switching
-between navigation mode and weather mode.
+- Selvstendig MET Weather-identitet og pluginbibliotek.
+- Flatpak-kompilering med SDK 25.08.
+- Generering av installasjonspakke med metadata.xml.
+- Import via OpenCPNs grafiske utvidelsesbehandling.
+- MET Weather og Testplugin installert samtidig.
+- MET Weather aktivert uten ikonfeil.
+- MET Weather-ikon synlig i utvidelseslisten og verktøylinjen.
+- Klikk på MET Weather åpner den eksisterende testdialogen.
 
-## Development environment
+## Løst problem: SVG-ikoner
 
-- Development computer: Linux Mint (KontorPC)
-- OpenCPN: 5.14.2, installed using Flatpak
-- CMake: 3.28.3
-- GCC: 13.3.0
-- Git: 2.43.0
-- Flatpak SDK: Freedesktop 25.08
-- Plugin API configured in CMakeLists.txt: 1.21
+Tidligere brukte tpicons.cpp hardkodede Flatpak-stier.
+Dette fungerte ikke med den brukerimporterte utvidelsen.
 
-## Completed and verified
+Løsningen er OpenCPNs offisielle API:
 
-- OpenCPN testplugin source obtained and modified.
-- Plugin previously built as a Flatpak package.
-- Plugin loaded in OpenCPN.
-- Green TP toolbar button displayed.
-- Toolbar button opens and closes the plugin control dialog.
-- Existing modified source files copied into this repository.
-- opencpn-libs registered as a Git submodule.
-- opencpn-libs pinned to commit:
-  6a5616930143528470442e376349ccc2be7800b4
+    GetPluginDataDir("metweather_pi")
 
-The original working source remains available in:
-~/Utvikling/testplugin_pi
+Funksjonen er dokumentert i opencpn-libs/api-21/ocpn_plugin.h.
+Koden legger deretter til undermappen data.
 
-## Investigated but not runtime-verified
+Alle tre SVG-ikonene lastes nå uten den tidligere ikonfeilen.
+Dette er bekreftet ved aktivering i OpenCPN.
 
-- OpenCPN API 1.21 chart display controls.
-- Saving and restoring chart display settings.
-- Per-canvas display settings and viewport handling.
-- Compatibility of all required API functions with
-  OpenCPN 5.14.2 Flatpak.
+## Siste bekreftede kildekodeendring
 
-See docs/opencpn-api.md for API investigation notes.
+Commit: 030285d
+Use OpenCPN API to locate MET Weather icons
 
-## Not yet implemented
+Endringen er pushet til GitHub.
+Flatpak-bygget og installasjonspakken ble deretter generert
+og testet med vellykket resultat.
 
-- Navigation/weather mode switching.
-- Automatic saving and restoring of chart settings.
-- MET Norway weather data download.
-- Automatic geographic area selection.
-- Weather, current and wave layer selection.
-- Weather overlays and legends.
-- Offline caching.
-- Touch-friendly interface.
-- Windows and Android builds.
+## Ikke implementert ennå
 
-## Safety requirement
+- MET-værdata og nedlasting.
+- Automatisk områdevalg fra fartøyets posisjon.
+- Valg mellom Weather, Current og Waves.
+- Visning av værdata på kartet.
+- Forbedret visualisering og fargeforklaring.
+- Tilpasning til nettbrett.
+- Eget MET Weather-dialogvindu.
 
-Weather mode must not silently disable essential navigation
-information. In particular, AIS target visibility should be
-preserved unless the user explicitly changes it.
+## Viktig avgrensning
 
-## Current migration and build status
+Pluginen fungerer teknisk i OpenCPN, men er ennå ikke
+en fungerende værutvidelse. Dialogen viser fortsatt
+TESTPLUGIN og ODAPI-testinformasjon.
 
-- Migrated source committed and pushed to GitHub on main.
-- Migration commit: ac6163e.
-- Flatpak build from the new repository completed successfully.
-- Build target: flatpak-build.
-- Package target: flatpak-pkg.
-- Flatpak SDK: 25.08, architecture: x86_64.
-- Package: build/testplugin_pi-1.0.363.0-x86_64_flatpak-25.08.tar.gz.
-- Corrected cmake/PluginPackage.cmake to package from build/app/files.
-- Verified archive has one testplugin-flatpak-1.0.363.0/ root.
-- Verified lib/opencpn/libtestplugin_pi.so and manifest.json.
-- No unwanted files/ or local home/ paths in the archive.
-- Temporary packaging symlink removed.
-- Flatpak builder fetches source from GitHub main.
-- The newly packaged plugin has NOT yet been runtime-tested in OpenCPN.
+## Arbeidsmetode
 
-## Next steps
-
-1. Commit and push the packaging correction and updated documentation.
-2. Test the new Flatpak package in OpenCPN 5.14.2.
-3. Verify plugin loading, toolbar button and dialog.
-4. Document runtime results and commit the milestone.
-5. Begin implementing navigation/weather mode switching.
-
-## Working rules
-
-- Use this repository as the project source of truth.
-- Document important findings and decisions.
-- Distinguish API declarations from compiled and runtime-tested code.
-- Commit and push at major milestones, including during a session.
-- Preserve working code before making substantial changes.
-- Prefer one verified development step at a time.
-
-## MET Weather 0.1.0 – egen pluginidentitet (18.10.2026)
-
-- Endret visningsnavn til MET Weather og pakkenavn til metweather.
-- Satt versjon til 0.1.0.
-- Skilt datakatalog og konfigurasjon fra Testplugin.
-- Oppdatert ikonsti og verktøylinjetekster.
-- Opprettet tre SVG-ikoner: normal, deaktivert og aktiv.
-- Oppdatert Cloudsmith-referansen til metweather.
-- Endringene er foreløpig kun gjort i kildekoden.
-- Bygging, pakking og kjøring i OpenCPN er IKKE verifisert.
-- Eksisterende Testplugin skal beholdes som fungerende referanse.
+- Ett kontrollert steg om gangen.
+- Skille mellom kildekode, kompilering, pakking,
+  installasjon, aktivering og funksjonstest.
+- Oppdatere STATUS.md og NEXT.md ved milepæler.
+- Commit og push til GitHub ved viktige milepæler.
+- Ikke endre eller fjerne eksisterende Testplugin.
