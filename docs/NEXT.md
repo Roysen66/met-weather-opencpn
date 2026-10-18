@@ -13,52 +13,41 @@ Read together with:
 Do not repeat completed investigations unless new evidence
 makes it necessary.
 
-## Current milestone: Secure the migrated project
+## Current milestone: Verify the migrated Flatpak package
 
-The modified testplugin source has been copied from:
+The migrated source is committed and pushed to GitHub main.
+Migration commit: ac6163e.
+
+The Flatpak build and package creation succeeded from the new
+repository. The packaging path bug in cmake/PluginPackage.cmake
+has been corrected and the archive structure verified.
+
+Package:
+
+    build/testplugin_pi-1.0.363.0-x86_64_flatpak-25.08.tar.gz
+
+The Flatpak builder currently fetches source from GitHub main.
+Changes to plugin source must be pushed before relying on a
+new flatpak-build result.
+
+The original working source remains at:
 
     ~/Utvikling/testplugin_pi
 
-Into the dedicated project repository:
-
-    ~/Utvikling/met-weather-opencpn
-
-The original source directory must remain untouched until the
-new project has been built and tested successfully.
-
-The OpenCPN libraries are a Git submodule pinned to:
-
-    6a5616930143528470442e376349ccc2be7800b4
-
 ## IMMEDIATE NEXT ACTION
 
-Inspect the repository before committing:
+Commit and push the verified packaging fix and documentation
+to Roysen66/met-weather-opencpn, branch main.
 
-    cd ~/Utvikling/met-weather-opencpn
-    git status --short --untracked-files=normal
+Then test the newly built package in OpenCPN 5.14.2 Flatpak.
 
-Check that:
-- Source files are present.
-- Documentation is present.
-- The opencpn-libs submodule is registered.
-- build/ and backup files are ignored.
-- No unexpected generated files are staged.
+Verify:
+- Plugin loads successfully.
+- Toolbar button appears.
+- Toolbar button opens and closes the control dialog.
 
-Then stage, review and commit the migration.
-
-Push to:
-
-    https://github.com/Roysen66/met-weather-opencpn.git
-
-Do not push to the original testplugin upstream repository.
-
-## After the migration commit
-
-1. Perform a clean build from the new repository.
-2. Verify the plugin loads in OpenCPN 5.14.2 Flatpak.
-3. Verify the toolbar button and dialog still work.
-4. Record build commands and results in documentation.
-5. Commit and push the verified build milestone.
+Do not mark the new package runtime-verified until these tests
+have actually succeeded.
 
 ## Next development milestone: Weather mode
 

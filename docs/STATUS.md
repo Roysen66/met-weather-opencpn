@@ -65,24 +65,30 @@ Weather mode must not silently disable essential navigation
 information. In particular, AIS target visibility should be
 preserved unless the user explicitly changes it.
 
-## Current migration status
+## Current migration and build status
 
-The source code has been copied from the original testplugin
-directory into the MET Weather repository.
-
-The dependency submodule has been pinned to the original version.
-
-A clean build from this new repository has NOT yet been tested.
-The migrated code has NOT yet been committed or pushed to GitHub.
+- Migrated source committed and pushed to GitHub on main.
+- Migration commit: ac6163e.
+- Flatpak build from the new repository completed successfully.
+- Build target: flatpak-build.
+- Package target: flatpak-pkg.
+- Flatpak SDK: 25.08, architecture: x86_64.
+- Package: build/testplugin_pi-1.0.363.0-x86_64_flatpak-25.08.tar.gz.
+- Corrected cmake/PluginPackage.cmake to package from build/app/files.
+- Verified archive has one testplugin-flatpak-1.0.363.0/ root.
+- Verified lib/opencpn/libtestplugin_pi.so and manifest.json.
+- No unwanted files/ or local home/ paths in the archive.
+- Temporary packaging symlink removed.
+- Flatpak builder fetches source from GitHub main.
+- The newly packaged plugin has NOT yet been runtime-tested in OpenCPN.
 
 ## Next steps
 
-1. Review Git status and verify ignored build files.
-2. Commit the migrated source, dependency reference and documentation.
-3. Push the milestone to GitHub.
-4. Perform a clean build from this repository.
-5. Verify plugin loading and toolbar operation in OpenCPN.
-6. Begin implementing navigation/weather mode switching.
+1. Commit and push the packaging correction and updated documentation.
+2. Test the new Flatpak package in OpenCPN 5.14.2.
+3. Verify plugin loading, toolbar button and dialog.
+4. Document runtime results and commit the milestone.
+5. Begin implementing navigation/weather mode switching.
 
 ## Working rules
 

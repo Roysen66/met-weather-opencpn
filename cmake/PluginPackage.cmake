@@ -34,8 +34,9 @@ if (OCPN_FLATPAK_CONFIG)
     COMMAND
       ${TAR} -czf
       ${PKG_NVR}-${ARCH}${PKG_TARGET_WX_VER}_${PKG_TARGET_NVR}.tar.gz --verbose
-      --transform 's|.*/files/|${PACKAGE}-flatpak-${PACKAGE_VERSION}/|'
-      ${CMAKE_CURRENT_BINARY_DIR}/flatpak-build/files
+      -C ${CMAKE_CURRENT_BINARY_DIR}/app
+      --transform 's|^files|${PACKAGE}-flatpak-${PACKAGE_VERSION}|'
+      files/
     COMMAND chmod -R a+wr ../build
   )
 
