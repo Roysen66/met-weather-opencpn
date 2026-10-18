@@ -9,6 +9,8 @@ metWeatherDialog::metWeatherDialog(wxWindow* parent)
                wxDefaultPosition, wxSize(380, 220),
                wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
+    Bind(wxEVT_CLOSE_WINDOW, &metWeatherDialog::OnClose, this);
+
     wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
 
     mainSizer->Add(
@@ -37,4 +39,22 @@ metWeatherDialog::metWeatherDialog(wxWindow* parent)
 
     SetSizer(mainSizer);
     Layout();
+}
+
+void metWeatherDialog::SetCloseCallback(std::function<void()> callback)
+{
+    m_closeCallback = callback;
+}
+
+void metWeatherDialog::OnClose(wxCloseEvent& event)
+{
+    if (!event.CanVeto()) {
+        event.Skip();
+        return;
+    }
+
+    Hide();
+
+    if (m_closeCallback)
+        m_closeCallback();
 }

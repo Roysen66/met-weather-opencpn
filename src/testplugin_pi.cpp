@@ -240,6 +240,10 @@ int testplugin_pi::Init(void)
     m_pTPConfig = GetOCPNConfigObject();
 
     m_metWeatherDialog = new metWeatherDialog(m_parent_window);
+    m_metWeatherDialog->SetCloseCallback([this]() {
+        m_btpDialog = false;
+        SetToolbarItemState(m_testplugin_button_id, false);
+    });
     m_metWeatherDialog->Hide();
 
     m_tpControlDialogImpl = new tpControlDialogImpl(m_parent_window);
